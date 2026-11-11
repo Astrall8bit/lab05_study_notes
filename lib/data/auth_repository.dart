@@ -62,7 +62,7 @@ class AuthRepository {
   static String messageFor(String code) {
     // TODO(2) - a switch expression is the cleanest way
     return switch (code) {
-      'invalid-email' => 'the email address is not valid.',
+      'invalid-email' => 'The email address is not valid.',
       'weak-password' => 'The password must be at least 6 characters.',
       'email-already-in-use' => 'An account already exists for this email.',
       'invalid-credential' || 'wrong-password' || 'user-not-found' =>
