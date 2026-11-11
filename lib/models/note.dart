@@ -16,7 +16,22 @@ class Note {
   /// - createdAt is a Timestamp (use .toDate()) - or missing/null: then createdAt is null.
   factory Note.fromFirestore(String id, Map<String, dynamic> data) {
     // TODO(1)
-    throw UnimplementedError('Note.fromFirestore');
+    final title = data['title'];
+    final body = data['body'];
+    if (title is! String || body is! String) {
+      throw const FormatException('Title and body must be Strings');
+    }
+    final createdAtTimestamp = data['createdAt'];
+    DateTime? createdAt;
+    if (createdAtTimestamp is Timestamp) {
+      createdAt = createdAtTimestamp.toDate();
+    } 
+    return Note(
+      id: id,
+      title: title,
+      body: body,
+      createdAt: createdAt,
+    );
   }
 
   /// The map written to Firestore: title, body and
@@ -24,7 +39,11 @@ class Note {
   /// The id is NOT a field - it is the document id.
   Map<String, dynamic> toFirestore() {
     // TODO(1)
-    throw UnimplementedError('Note.toFirestore');
+    return {
+      'title': title,
+      'body': body,
+      'createdAt': FieldValue.serverTimestamp(),
+    };
   }
 }
 
